@@ -1,10 +1,10 @@
-import React from "react"
-import { graphql, useStaticQuery } from "gatsby"
-import Title from "./Title"
-import styled from "styled-components"
-import Image from "gatsby-image"
-import { FaQuoteRight } from "react-icons/fa"
-import { FiChevronRight, FiChevronLeft } from "react-icons/fi"
+import React from 'react';
+import { graphql, useStaticQuery } from 'gatsby';
+import Title from './Title';
+import styled from 'styled-components';
+import Image from 'gatsby-image';
+import { FaQuoteRight } from 'react-icons/fa';
+import { FiChevronRight, FiChevronLeft } from 'react-icons/fi';
 
 const query = graphql`
   {
@@ -27,63 +27,60 @@ const query = graphql`
       }
     }
   }
-`
+`;
 
 const Slider = () => {
   const {
-    allAirtable: { nodes: customers },
-  } = useStaticQuery(query)
-  const [index, setIndex] = React.useState(0)
+    allAirtable: { nodes: customers }
+  } = useStaticQuery(query);
+  const [index, setIndex] = React.useState(0);
   React.useEffect(() => {
-    const lastIndex = customers.length - 1
+    const lastIndex = customers.length - 1;
     if (index < 0) {
-      setIndex(lastIndex)
+      setIndex(lastIndex);
     }
     if (index > lastIndex) {
-      setIndex(0)
+      setIndex(0);
     }
-  }, [index, customers])
+  }, [index, customers]);
   return (
-    <Wrapper className="section">
-      <Title title="reviews" />
-      <div className="section-center">
+    <Wrapper className='section'>
+      <Title title='reviews' />
+      <div className='section-center'>
         {customers.map((customer, customerIndex) => {
           const {
-            data: { image, name, title, quote },
-          } = customer
-          const customerImg = image.localFiles[0].childImageSharp.fixed
+            data: { image, name, title, quote }
+          } = customer;
+          const customerImg = image.localFiles[0].childImageSharp.fixed;
 
-          let position = "nextSlide"
+          let position = 'nextSlide';
           if (customerIndex === index) {
-            position = "activeSlide"
+            position = 'activeSlide';
           }
-          if (
-            customerIndex === index - 1 ||
-            (index === 0 && customerIndex === customers.length - 1)
-          ) {
-            position = "lastSlide"
+          if (customerIndex === index - 1 || (index === 0 && customerIndex === customers.length - 1)) {
+            position = 'lastSlide';
           }
 
           return (
             <article className={position} key={customerIndex}>
-              <Image fixed={customerImg} className="img"></Image>
+              <Image fixed={customerImg} className='img'></Image>
               <h4>{name}</h4>
-              <p className="title">{title}</p>
-              <p className="text">{quote}</p>
-              <FaQuoteRight className="icon" />
+              <p className='title'>{title}</p>
+              <p className='text'>{quote}</p>
+              <FaQuoteRight className='icon' />
             </article>
-          )
+          );
         })}
-        <button className="prev" onClick={() => setIndex(index - 1)}>
+        <button className='prev' onClick={() => setIndex(index - 1)}>
           <FiChevronLeft />
         </button>
-        <button className="next" onClick={() => setIndex(index + 1)}>
+        <button className='next' onClick={() => setIndex(index + 1)}>
           <FiChevronRight />
         </button>
       </div>
     </Wrapper>
-  )
-}
+  );
+};
 
 const Wrapper = styled.div`
   background: var(--clr-grey-10);
@@ -175,5 +172,5 @@ const Wrapper = styled.div`
       transform: translateX(100%);
     }
   }
-`
-export default Slider
+`;
+export default Slider;

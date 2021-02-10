@@ -1,22 +1,22 @@
-import React from "react"
-import { Layout } from "../../components"
-import styled from "styled-components"
-import { Link } from "gatsby"
-const Payments = props => {
-  const path = props.location.pathname.slice(1)
+import React from 'react';
+import { Layout } from '../../components';
+import styled from 'styled-components';
+import { Link } from 'gatsby';
+const Payments = (props) => {
+  const path = props.location.pathname.slice(1);
   return (
     <Layout>
       <Wrapper>
         <div>
           <h1>{path}</h1>
-          <Link to="/" className="btn">
+          <Link to='/' className='btn'>
             home
           </Link>
         </div>
       </Wrapper>
     </Layout>
-  )
-}
+  );
+};
 
 const Wrapper = styled.main`
   margin-top: -5rem;
@@ -39,6 +39,6 @@ const Wrapper = styled.main`
       font-size: 4rem;
     }
   }
-`
+`;
 
-export default Payments
+export default Payments;

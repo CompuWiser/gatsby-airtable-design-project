@@ -1,16 +1,16 @@
-require("dotenv").config({
-  path: `.env.${process.env.NODE_ENV}`,
-})
+require('dotenv').config({
+  path: `.env`
+});
 // const queries = require("./src/constants/algolia")
 module.exports = {
   siteMetadata: {
     title: `Design Shop`,
     description: `Gatsby Airtable Example. Built using Airtable, Algolia Search, Gatsby Background Image plugin and  React Context API. Containts two sliders, real-time Airtable updates and submenus. Styled using Styled-Components. `,
-    author: `@johnsmilga`,
+    author: `@compuwiser`,
     titleTemplate: `%s | Gatsby - Airtable`,
     url: `https://gatsby-airtable-design-project.netlify.app/`,
     image: `mainBcg.png`,
-    twitterUsername: `@john_smilga`,
+    twitterUsername: `@compuwiser`
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -19,8 +19,8 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
-        path: `${__dirname}/src/images`,
-      },
+        path: `${__dirname}/src/images`
+      }
     },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
@@ -30,13 +30,13 @@ module.exports = {
         fonts: {
           google: [
             {
-              family: "Roboto",
-              variants: ["400", "700"],
+              family: 'Roboto',
+              variants: ['400', '700']
             },
-            { family: "Open Sans" },
-          ],
-        },
-      },
+            { family: 'Open Sans' }
+          ]
+        }
+      }
     },
     {
       resolve: `gatsby-source-airtable`,
@@ -47,15 +47,15 @@ module.exports = {
           {
             baseId: process.env.GATSBY_AIRTABLE_BASE_ID,
             tableName: `Projects`,
-            mapping: { image: `fileNode` },
+            mapping: { image: `fileNode` }
           },
           {
             baseId: process.env.GATSBY_AIRTABLE_BASE_ID,
             tableName: `Customers`,
-            mapping: { image: `fileNode` },
-          },
-        ],
-      },
+            mapping: { image: `fileNode` }
+          }
+        ]
+      }
     },
     {
       resolve: `gatsby-plugin-algolia`,
@@ -63,9 +63,9 @@ module.exports = {
         appId: process.env.GATSBY_ALGOLIA_APP_ID,
         apiKey: process.env.GATSBY_ALGOLIA_ADMIN_KEY,
         indexName: process.env.GATSBY_ALGOLIA_INDEX_NAME,
-        queries: require("./src/constants/algolia"),
-        chunkSize: 10000,
-      },
-    },
-  ],
-}
+        queries: require('./src/constants/algolia'),
+        chunkSize: 10000
+      }
+    }
+  ]
+};

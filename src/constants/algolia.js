@@ -25,21 +25,21 @@ const airtableQuery = `
     }
   }
 
-`
+`;
 function pageToAlgoliaRecord({ id, data: { name, type, date, image } }) {
   return {
     objectID: id,
     name,
     type,
     date,
-    image: { ...image.localFiles[0].childImageSharp.fluid },
-  }
+    image: { ...image.localFiles[0].childImageSharp.fluid }
+  };
 }
 const queries = [
   {
     query: airtableQuery,
-    transformer: ({ data }) => data.allAirtable.nodes.map(pageToAlgoliaRecord),
-  },
-]
+    transformer: ({ data }) => data.allAirtable.nodes.map(pageToAlgoliaRecord)
+  }
+];
 
-module.exports = queries
+module.exports = queries;

@@ -9,13 +9,13 @@ vscode-styled-components
 Regural Setup
 
 ```jsx
-import styled from "styled-components"
+import styled from 'styled-components';
 const NameOfElement = styled.htmlElement`
 your
 styles
 go
 here
-`
+`;
 ```
 
 Global Styles
@@ -61,9 +61,9 @@ npm install --save gatsby-background-image
 gatsby-config
 
 ```js
-require("dotenv").config({
-  path: `.env.${process.env.NODE_ENV}`,
-})
+require('dotenv').config({
+  path: `.env.${process.env.NODE_ENV}`
+});
 ```
 
 #### ROOT!!!!!!!!!!!!!!!
