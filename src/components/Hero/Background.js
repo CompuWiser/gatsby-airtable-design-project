@@ -15,16 +15,12 @@ const query = graphql`
   }
 `;
 
-const Background = ({ children, image }) => {
-  const {
-    file: {
-      childImageSharp: { fluid }
-    }
-  } = useStaticQuery(query);
+export default ({ children, image }) => {
+  const imageData = image ?? useStaticQuery(query).file.childImageSharp.fluid;
 
   return (
     <Wrapper>
-      <BackgroundImage Tag='div' fluid={image || fluid} className='bcg' preserveStackingContext={true}>
+      <BackgroundImage Tag='div' fluid={imageData} className='bcg' preserveStackingContext={true}>
         {children}
       </BackgroundImage>
     </Wrapper>
@@ -32,13 +28,9 @@ const Background = ({ children, image }) => {
 };
 
 const fadeIn = keyframes`
-      from{
-         background-color:rgb(0,0,0,0.8);
-      }
-      to{
-        background-color:rgba(0,0,0,0.4);
-      }
-      `;
+  from  { background-color:rgba(0,0,0,0.8); }
+  to    { background-color:rgba(0,0,0,0.4); }
+`;
 
 const Wrapper = styled.section`
   .bcg {
@@ -48,9 +40,8 @@ const Wrapper = styled.section`
     display: grid;
     place-items: center;
     animation: ${fadeIn} 2s ease-in-out 1 forwards;
-  }
-  .bcg::before {
-    opacity: 1;
+    &::before {
+      opacity: 1;
+    }
   }
 `;
-export default Background;

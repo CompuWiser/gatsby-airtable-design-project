@@ -173,7 +173,7 @@ p {
 }
 `;
 
-export const wrapRootElement = ({ element }) => (
+export default ({ element }) => (
   <>
     <GlobalStyle />
     <GatsbyProvider>{element}</GatsbyProvider>

@@ -24,17 +24,13 @@ const airtableQuery = `
       }
     }
   }
-
 `;
-function pageToAlgoliaRecord({ id, data: { name, type, date, image } }) {
-  return {
-    objectID: id,
-    name,
-    type,
-    date,
-    image: { ...image.localFiles[0].childImageSharp.fluid }
-  };
-}
+
+const pageToAlgoliaRecord = ({ id: objectID, data: { name, type, date, image } }) => ({
+  objectID, name, type, date,
+  image: { ...image.localFiles[0].childImageSharp.fluid }
+});
+
 const queries = [
   {
     query: airtableQuery,

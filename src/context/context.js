@@ -12,6 +12,7 @@ const GatsbyProvider = ({ children }) => {
   const showSidebar = () => {
     setIsSidebarOpen(true);
   };
+
   const hideSidebar = () => {
     setIsSidebarOpen(false);
   };

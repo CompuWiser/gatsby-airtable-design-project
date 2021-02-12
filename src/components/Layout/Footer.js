@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-const Footer = () => {
-  return (
-    <Wrapper>
-      <p>&copy; {new Date().getFullYear()} John Smilga. All rights reserved. Built with Gatsby</p>
-    </Wrapper>
-  );
-};
+
+export default () => (
+  <Wrapper>
+    <p>&copy; {new Date().getFullYear()} John Smilga. All rights reserved. Built with Gatsby</p>
+  </Wrapper>
+);
+
 const Wrapper = styled.footer`
   height: 5rem;
   display: grid;
@@ -22,4 +22,3 @@ const Wrapper = styled.footer`
     }
   }
 `;
-export default Footer;

@@ -9,7 +9,8 @@ import React, { useContext } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import Sidebar from './Sidebar';
-import { GatsbyContext } from '../context/context';
+import { GatsbyContext } from '../../context/context';
+
 const Layout = ({ children }) => {
   const { isSidebarOpen } = useContext(GatsbyContext);
 

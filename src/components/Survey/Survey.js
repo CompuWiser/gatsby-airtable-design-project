@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Title from './Title';
+import Title from '../Title';
 import styled from 'styled-components';
 import base from './Airtable';
 import { FaVoteYea } from 'react-icons/fa';

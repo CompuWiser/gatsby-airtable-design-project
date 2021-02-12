@@ -1,11 +1,10 @@
 import React from 'react';
 import { graphql } from 'gatsby';
 import { Layout, Hero, About, Projects, Survey, Slider, GridProjects } from '../components';
-import SEO from '../components/seo';
-const HomePage = ({ data }) => {
-  const {
-    allAirtable: { nodes: projects }
-  } = data;
+import SEO from '../components/SEO';
+
+const HomePage = (props) => {
+  const projects = props.data.allAirtable.nodes;
   return (
     <Layout>
       <SEO title='Home' />

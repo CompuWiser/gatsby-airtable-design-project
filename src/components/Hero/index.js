@@ -1,20 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Background from './Background';
 import styled from 'styled-components';
 import { Link } from 'gatsby';
 import { FiChevronRight, FiChevronLeft } from 'react-icons/fi';
+
 const Hero = ({ projects }) => {
-  const images = projects.map((item) => {
-    const {
-      data: {
-        image: { localFiles }
-      }
-    } = item;
-    const image = localFiles[0].childImageSharp.fluid;
-    return image;
-  });
-  const [index, setIndex] = React.useState(0);
-  React.useEffect(() => {
+  const images = projects.map(({ data }) => (data.image.localFiles[0].childImageSharp.fluid));
+  const [ index, setIndex ] = useState(0);
+
+  useEffect(() => {
     const lastIndex = images.length - 1;
     if (index < 0) {
       setIndex(lastIndex);
@@ -22,10 +16,11 @@ const Hero = ({ projects }) => {
     if (index > lastIndex) {
       setIndex(0);
     }
-  }, [index, images]);
+  }, [ index, images ]);
+
   return (
     <Wrapper>
-      <Background image={images[index]}>
+      <Background image={images[ index ]}>
         <article>
           <h3>If you can dream it, we can create it</h3>
           <h1>let your home be inique and stylish</h1>

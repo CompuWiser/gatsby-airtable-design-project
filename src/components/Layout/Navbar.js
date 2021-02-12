@@ -1,18 +1,16 @@
 import React, { useContext } from 'react';
-import styled from 'styled-components';
-import logo from '../images/logo.svg';
-import { GoThreeBars } from 'react-icons/go';
 import { Link } from 'gatsby';
+import styled from 'styled-components';
+import { GoThreeBars } from 'react-icons/go';
+
 import NavLink from './NavLink';
-import { GatsbyContext } from '../context/context';
+import { GatsbyContext } from '../../context/context';
+import logo from '../../images/logo.svg';
+
 const Navbar = () => {
   const { isSidebarOpen, showSidebar, links } = useContext(GatsbyContext);
   const tempLinks = [
-    ...new Set(
-      links.map((link) => {
-        return link.page;
-      })
-    )
+    ...new Set(links.map(({ page }) => page))
   ];
 
   return (
@@ -29,9 +27,7 @@ const Navbar = () => {
           )}
         </div>
         <ul className='nav-links'>
-          {tempLinks.map((page, index) => {
-            return <NavLink key={index} page={page}></NavLink>;
-          })}
+          {tempLinks.map((page, index) => <NavLink key={index} page={page}></NavLink>)}
         </ul>
       </div>
     </Wrapper>

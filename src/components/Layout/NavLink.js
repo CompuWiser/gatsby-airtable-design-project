@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 
 import styled from 'styled-components';
 import { Link } from 'gatsby';
-import { GatsbyContext } from '../context/context';
+import { GatsbyContext } from '../../context/context';
+
 const NavLink = ({ page }) => {
   const { links } = useContext(GatsbyContext);
   return (
@@ -19,6 +20,7 @@ const NavLink = ({ page }) => {
               </Link>
             );
           }
+          return '';
         })}
         <div className='caret'></div>
       </div>

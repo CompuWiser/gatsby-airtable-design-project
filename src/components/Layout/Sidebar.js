@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { MdClose } from 'react-icons/md';
 import { Link } from 'gatsby';
-import { GatsbyContext } from '../context/context';
+import { GatsbyContext } from '../../context/context';
 const Sidebar = () => {
   const { links, hideSidebar } = useContext(GatsbyContext);
 
