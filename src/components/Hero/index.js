@@ -5,8 +5,8 @@ import { Link } from 'gatsby';
 import { FiChevronRight, FiChevronLeft } from 'react-icons/fi';
 
 const Hero = ({ projects }) => {
-  const images = projects.map(({ data }) => (data.image.localFiles[0].childImageSharp.fluid));
-  const [ index, setIndex ] = useState(0);
+  const images = projects.map(({ data }) => data.image.localFiles[0].childImageSharp.fluid);
+  const [index, setIndex] = useState(0);
 
   useEffect(() => {
     const lastIndex = images.length - 1;
@@ -16,11 +16,11 @@ const Hero = ({ projects }) => {
     if (index > lastIndex) {
       setIndex(0);
     }
-  }, [ index, images ]);
+  }, [index, images]);
 
   return (
     <Wrapper>
-      <Background image={images[ index ]}>
+      <Background image={images[index]}>
         <article>
           <h3>If you can dream it, we can create it</h3>
           <h1>let your home be inique and stylish</h1>
@@ -34,15 +34,13 @@ const Hero = ({ projects }) => {
           <FiChevronRight />
         </button>
         <div className='dots'>
-          {images.map((_, btnIndex) => {
-            return (
-              <span
-                key={btnIndex}
-                onClick={() => setIndex(btnIndex)}
-                className={index === btnIndex ? 'active' : undefined}
-              ></span>
-            );
-          })}
+          {images.map((_, btnIndex) => (
+            <span
+              key={btnIndex}
+              onClick={() => setIndex(btnIndex)}
+              className={index === btnIndex ? 'active' : undefined}
+            ></span>
+          ))}
         </div>
       </Background>
     </Wrapper>
@@ -76,11 +74,12 @@ const Wrapper = styled.section`
       font-size: 1rem;
       cursor: pointer;
       transition: var(--transition);
+      &hover {
+        background: var(--clr-white);
+        color: var(--clr-black);
+      }
     }
-    a:hover {
-      background: var(--clr-white);
-      color: var(--clr-black);
-    }
+
     @media (min-width: 800px) {
       /* padding: 0 1rem; */
       a {
@@ -103,15 +102,14 @@ const Wrapper = styled.section`
     border: transparent;
     cursor: pointer;
     transition: var(--transition);
+    &:hover {
+      color: var(--clr-primary-5);
+    }
     @media (min-width: 800px) {
       & {
         font-size: 4.5rem;
       }
     }
-  }
-  .next-btn:hover,
-  .prev-btn:hover {
-    color: var(--clr-primary-5);
   }
   .prev-btn {
     left: 0;
@@ -136,6 +134,7 @@ const Wrapper = styled.section`
     transform: translateX(-50%);
     display: flex;
     justify-content: center;
+    align-items: center;
     span {
       display: block;
       cursor: pointer;
@@ -145,15 +144,17 @@ const Wrapper = styled.section`
       background: var(--clr-white);
       margin: 0 1rem;
       border: 2px solid var(--clr-white);
+      &.active {
+        background-color: transparent;
+        height: 1.2rem;
+        width: 1.2rem;
+      }
       @media (min-width: 800px) {
         & {
           height: 1rem;
           width: 1rem;
         }
       }
-    }
-    span.active {
-      background-color: transparent;
     }
   }
 `;

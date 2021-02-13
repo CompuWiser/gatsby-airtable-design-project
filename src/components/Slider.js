@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { graphql, useStaticQuery } from 'gatsby';
 import Title from './Title';
 import styled from 'styled-components';
@@ -29,35 +29,30 @@ const query = graphql`
   }
 `;
 
-const Slider = () => {
-  const {
-    allAirtable: { nodes: customers }
-  } = useStaticQuery(query);
-  const [index, setIndex] = React.useState(0);
-  React.useEffect(() => {
+export default () => {
+  const customers = useStaticQuery(query).allAirtable.nodes;
+  const [sliderIndex, setSliderIndex] = useState(0);
+
+  useEffect(() => {
     const lastIndex = customers.length - 1;
-    if (index < 0) {
-      setIndex(lastIndex);
-    }
-    if (index > lastIndex) {
-      setIndex(0);
-    }
-  }, [index, customers]);
+    if (sliderIndex < 0)          setSliderIndex(lastIndex);
+    if (sliderIndex > lastIndex)  setSliderIndex(0);
+  }, [sliderIndex, customers]);
+
   return (
     <Wrapper className='section'>
       <Title title='reviews' />
       <div className='section-center'>
-        {customers.map((customer, customerIndex) => {
-          const {
-            data: { image, name, title, quote }
-          } = customer;
+        {customers.map(({ data }, customerIndex) => {
+          const { image, name, title, quote } = data;
           const customerImg = image.localFiles[0].childImageSharp.fixed;
 
           let position = 'nextSlide';
-          if (customerIndex === index) {
-            position = 'activeSlide';
-          }
-          if (customerIndex === index - 1 || (index === 0 && customerIndex === customers.length - 1)) {
+          if (customerIndex === sliderIndex) position = 'activeSlide';
+          if (
+            customerIndex === sliderIndex - 1 ||
+            (sliderIndex === 0 && customerIndex === customers.length - 1)
+          ) {
             position = 'lastSlide';
           }
 
@@ -71,10 +66,12 @@ const Slider = () => {
             </article>
           );
         })}
-        <button className='prev' onClick={() => setIndex(index - 1)}>
+
+        <button className='prev' onClick={() => setSliderIndex(sliderIndex - 1)}>
           <FiChevronLeft />
         </button>
-        <button className='next' onClick={() => setIndex(index + 1)}>
+
+        <button className='next' onClick={() => setSliderIndex(sliderIndex + 1)}>
           <FiChevronRight />
         </button>
       </div>
@@ -133,10 +130,9 @@ const Wrapper = styled.div`
       border-radius: var(--radius);
       cursor: pointer;
       transition: var(--transition);
-    }
-    .prev:hover,
-    .next:hover {
-      background: var(--clr-primary-5);
+      &:hover {
+        background: var(--clr-primary-5);
+      }
     }
     .prev {
       left: 0;
@@ -160,17 +156,16 @@ const Wrapper = styled.div`
       height: 100%;
       opacity: 0;
       transition: var(--transition);
-    }
-    article.activeSlide {
-      opacity: 1;
-      transform: translateX(0);
-    }
-    article.lastSlide {
-      transform: translateX(-100%);
-    }
-    article.nextSlide {
-      transform: translateX(100%);
+      &.activeSlide {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      &.lastSlide {
+        transform: translateX(-100%);
+      }
+      &.nextSlide {
+        transform: translateX(100%);
+      }
     }
   }
 `;
-export default Slider;

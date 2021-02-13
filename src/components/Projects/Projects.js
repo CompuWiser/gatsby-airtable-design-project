@@ -1,28 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'gatsby';
-import Title from '../Title';
 import styled from 'styled-components';
 import Image from 'gatsby-image';
+
+import Title from '../Title';
 import SearchButtons from './SearchButtons';
-const Projects = ({ projects: data, title, page }) => {
-  const [projects, setProjects] = React.useState(data);
+
+export default ({ projects: data, title, page }) => {
+  const [projects, setProjects] = useState(data);
 
   const setBackToAll = () => {
     setProjects(data);
   };
+
   return (
     <Wrapper className='section'>
       <Title title={title || 'projects'} />
+
       {page && <SearchButtons projects={data} setProjects={setProjects} setBackToAll={setBackToAll} />}
+
       <div className='section-center'>
-        {projects.map((item) => {
-          const { id } = item;
-          const { name, type } = item.data;
-          const fluid = item.data.image.localFiles[0].childImageSharp.fluid;
+        {projects.map(({ id, data }) => {
+          const { name, type, image } = data;
+          const imageData = image.localFiles[0].childImageSharp.fluid;
           return (
             <article key={id}>
               <div className='container'>
-                <Image fluid={fluid} className='img' />
+                <Image fluid={imageData} className='img' />
                 <div className='info'>
                   <p>- {type} -</p>
                   <h3>{name}</h3>
@@ -32,11 +36,8 @@ const Projects = ({ projects: data, title, page }) => {
           );
         })}
       </div>
-      {!page && (
-        <Link to='/projects' className='btn'>
-          all projects
-        </Link>
-      )}
+
+      {!page && <Link to='/projects' className='btn'>all projects</Link>}
     </Wrapper>
   );
 };
@@ -117,4 +118,3 @@ const Wrapper = styled.section`
     margin-top: 3rem;
   }
 `;
-export default Projects;
