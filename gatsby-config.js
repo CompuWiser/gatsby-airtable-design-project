@@ -1,7 +1,7 @@
 require('dotenv').config({
   path: '.env'
 });
-// const queries = require("./src/constants/algolia")
+
 module.exports = {
   siteMetadata: {
     title: 'Design Shop',

@@ -6,38 +6,44 @@ import Image from 'gatsby-image';
 import Title from '../Title';
 import SearchButtons from './SearchButtons';
 
-export default ({ projects: data, title, page }) => {
-  const [projects, setProjects] = useState(data);
+export default ({ projects, title, page }) => {
+  const [visibleProjects, setVisibleProjects] = useState(projects);
 
   const setBackToAll = () => {
-    setProjects(data);
+    setVisibleProjects(projects);
   };
 
   return (
     <Wrapper className='section'>
       <Title title={title || 'projects'} />
 
-      {page && <SearchButtons projects={data} setProjects={setProjects} setBackToAll={setBackToAll} />}
+      {page && (
+        <SearchButtons
+          projects={projects}
+          setProjects={setVisibleProjects}
+          setBackToAll={setBackToAll}
+        />
+      )}
 
       <div className='section-center'>
-        {projects.map(({ id, data }) => {
-          const { name, type, image } = data;
-          const imageData = image.localFiles[0].childImageSharp.fluid;
-          return (
-            <article key={id}>
-              <div className='container'>
-                <Image fluid={imageData} className='img' />
-                <div className='info'>
-                  <p>- {type} -</p>
-                  <h3>{name}</h3>
-                </div>
+        {visibleProjects.map(({ id, data: { image, type, name } }) => (
+          <article key={id}>
+            <div className='container'>
+              <Image fluid={image.localFiles[0].childImageSharp.fluid} className='img' />
+              <div className='info'>
+                <p>- {type} -</p>
+                <h3>{name}</h3>
               </div>
-            </article>
-          );
-        })}
+            </div>
+          </article>
+        ))}
       </div>
 
-      {!page && <Link to='/projects' className='btn'>all projects</Link>}
+      {!page && (
+        <Link to='/projects' className='btn'>
+          all projects
+        </Link>
+      )}
     </Wrapper>
   );
 };

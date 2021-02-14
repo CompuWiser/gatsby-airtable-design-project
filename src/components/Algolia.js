@@ -1,40 +1,36 @@
-// Search.js
-
 import React from 'react';
 import styled from 'styled-components';
 import Image from 'gatsby-image';
-import Title from './Title';
 import algoliasearch from 'algoliasearch/lite';
-import { InstantSearch, SearchBox, Hits, connectHits } from 'react-instantsearch-dom';
+import { InstantSearch, SearchBox, connectHits } from 'react-instantsearch-dom';
+
+import Title from './Title';
 
 const searchClient = algoliasearch(
   process.env.GATSBY_ALGOLIA_APP_ID,
   process.env.GATSBY_ALGOLIA_SEARCH_KEY
 );
+
 const NewHits = connectHits(({ hits }) => {
-  return hits.map((item) => {
-    const { objectID, image, name } = item;
-    return (
-      <article key={objectID}>
-        <Image fluid={image} className='img' />
-        <h4>{name}</h4>
-      </article>
-    );
-  });
+  return hits.map(({ objectID, image, name }) => (
+    <article key={objectID}>
+      <Image fluid={image} className='img' />
+      <h4>{name}</h4>
+    </article>
+  ));
 });
-const Search = () => {
-  return (
-    <Wrapper>
-      <Title title='Algolia Search' />
-      <InstantSearch indexName={process.env.GATSBY_ALGOLIA_INDEX_NAME} searchClient={searchClient}>
-        <SearchBox />
-        <Container className='section-center'>
-          <NewHits />
-        </Container>
-      </InstantSearch>
-    </Wrapper>
-  );
-};
+
+export default () => (
+  <Wrapper>
+    <Title title='Algolia Search' />
+    <InstantSearch indexName={process.env.GATSBY_ALGOLIA_INDEX_NAME} searchClient={searchClient}>
+      <SearchBox />
+      <Container className='section-center'>
+        <NewHits />
+      </Container>
+    </InstantSearch>
+  </Wrapper>
+);
 
 const Wrapper = styled.section`
   padding: 5rem 0;
@@ -108,5 +104,3 @@ const Container = styled.div`
     grid-template-columns: repeat(4, 1fr);
   }
 `;
-
-export default Search;

@@ -27,7 +27,10 @@ const airtableQuery = `
 `;
 
 const pageToAlgoliaRecord = ({ id: objectID, data: { name, type, date, image } }) => ({
-  objectID, name, type, date,
+  objectID,
+  name,
+  type,
+  date,
   image: { ...image.localFiles[0].childImageSharp.fluid }
 });
 

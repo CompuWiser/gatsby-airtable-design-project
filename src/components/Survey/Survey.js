@@ -3,54 +3,36 @@ import styled from 'styled-components';
 import { FaVoteYea } from 'react-icons/fa';
 
 import Title from '../Title';
-import base from './Airtable';
+import { getRecords, updateRecords } from './Airtable';
 
-const Survey = () => {
+export default () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const getRecords = async () => {
-    const records = await base('Survey')
-      .select({})
-      .firstPage()
-      .catch((err) => console.log(err));
-
-    const newItems = records.map((record) => {
-      const { id, fields } = record;
-      return { id, fields };
-    });
+  const fetchRecords = async () => {
+    const records = await getRecords();
+    const newItems = records.map(({ id, fields }) => ({ id, fields }));
 
     setItems(newItems);
     setLoading(false);
   };
 
-  const giveVote = async (id) => {
+  const giveVote = async (votedItemId) => {
     setLoading(true);
-    const tempItems = [...items].map((item) => {
-      if (item.id === id) {
-        let { id, fields } = item;
-        fields = { ...fields, votes: fields.votes + 1 };
-        return { id, fields };
-      } else {
-        return item;
-      }
+    const newRecords = [...items].map(({ id, fields }) => {
+      if (id !== votedItemId) return { id, fields };
+      return { id, fields: { ...fields, votes: fields.votes + 1 } };
     });
 
-    const records = await base('Survey')
-      .update(tempItems)
-      .catch((err) => console.log(err));
-
-    const newItems = records.map((record) => {
-      const { id, fields } = record;
-      return { id, fields };
-    });
+    const records = await updateRecords(newRecords);
+    const newItems = records.map(({ id, fields }) => ({ id, fields }));
 
     setItems(newItems);
     setLoading(false);
   };
 
   useEffect(() => {
-    getRecords();
+    fetchRecords();
   }, []);
 
   return (
@@ -142,4 +124,3 @@ const Wrapper = styled.section`
     }
   }
 `;
-export default Survey;
